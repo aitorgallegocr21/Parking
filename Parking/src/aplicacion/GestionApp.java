@@ -94,7 +94,7 @@ public class GestionApp {
         System.out.println("\n--- PARKING ---");
         System.out.println(Funcionamiento.menu() + "\n");
         
-        int opcion = LecturaDatos.introOpcion(sc, 1, 12);
+        int opcion = LecturaDatos.introOpcion(sc, 1, 12, "Selecciona una opción: ");
         
         System.out.println("");
         
@@ -204,34 +204,37 @@ public class GestionApp {
 
         String[] matriculas = parking.obtenerArrayMatriculas();
 
+        if (matriculas.length == 0) {
+            System.out.println("No se han detectado vehículos.");
+            return;
+        }
+
         Arrays.sort(matriculas);
 
         // Se filtran por matrículas las cuales aparecen más de 1 vez
         String[] recurrentes = Arrays.stream(matriculas)
                 .filter(m -> (
-                        Arrays.stream(matriculas) // Segundo stream para contar
+                        Arrays.stream(matriculas)
                                 .filter(mat -> mat.equals(m))
                                 .count() >= 2
                 ))
-                .distinct() // Para que las matrículas recurrentes solo salgan una vez
+                .distinct()
                 .toArray(String[]::new);
-
-        if (matriculas.length == 0) {
-            System.out.println("No se han detectado vehículos.");
-            return;
-        }
 
         if (recurrentes.length == 0) {
             System.out.println("No se han detectado vehículos recurrentes.");
             return;
         }
 
-        // Mostrar el array ordenado y luego el de vehículos recurrentes
-        System.out.println("Lista de matrículas ordenadas ----------------------------------\n");
-        System.out.println(Arrays.toString(matriculas));
-        System.out.println();
-        System.out.println("Lista de vehículos recurrentes (2 o más veces) -----------------\n");
-        System.out.println(Arrays.toString(matriculas));
+        var salida = new StringBuilder();
+
+        salida.append("Lista de matrículas ordenadas ----------------------------------\n")
+                .append(Arrays.toString(matriculas))
+                .append("\n")
+                .append("Lista de vehículos recurrentes (2 o más veces) -----------------\n")
+                .append(Arrays.toString(recurrentes));
+
+        System.out.println(salida.toString());
     }
 
     /**
@@ -249,11 +252,16 @@ public class GestionApp {
 
         Arrays.sort(importes, Comparator.reverseOrder());
 
-        int cantidad = LecturaDatos.introOpcion(sc, 1, Integer.MAX_VALUE);
+        int cantidad = LecturaDatos.introOpcion(
+            sc,
+            1,
+            Integer.MAX_VALUE,
+            "Introduce la cantidad de tickets: "
+        );
 
         // Se valida la cantidad elegida
         if (cantidad > importes.length) {
-            System.out.println("No hay tantos tickets cerrados.");
+            System.out.println("No hay tantos tickets cerrados.\n");
             cantidad = importes.length;
         }
 

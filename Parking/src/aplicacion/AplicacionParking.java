@@ -22,6 +22,7 @@ public class AplicacionParking {
         final var sc = new Scanner(System.in);
         final var gestor = new GestionApp(parking, sc);
         
+        // Se ejecuta el funcionamiento completo del Parking
         gestor.accion();
 
         // Guardar datos de parking

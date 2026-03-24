@@ -8,7 +8,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import modelo.FormaPago;
 import modelo.Parking;
-import utilidades.Texto;
 
 /**
  *
@@ -17,32 +16,32 @@ import utilidades.Texto;
 public class LecturaDatos {
 
     /**
-     * Pide introducir una opción. No admite negativos, con decimales u otra cosa que no sea una opción válida.
-     * @param sc Scanner para introducir el número.
+     * @param sc
      * @param min
      * @param max
-     * @return El número introducido.
+     * @param mensaje
+     * @return
      */
-    public static int introOpcion(Scanner sc, int min, int max) {
+    public static int introOpcion(Scanner sc, int min, int max, String mensaje) {
         
         int numero;
-        String mensaje = "Se debe seleccionar una de las opciones disponibles.\n";
+        String error = "Se debe seleccionar una de las opciones disponibles.\n";
 
         while (true) {
             try {
-                System.out.print("Selecciona una opci\u00f3n: ");
+                System.out.print(mensaje);
                 numero = sc.nextInt();
                 sc.nextLine();
 
             } catch (InputMismatchException e) {
-                System.out.println(mensaje);
+                System.out.println(error);
                 sc.nextLine();
                 continue;
             }
 
             // Si no es un número de las opciones, se pide de nuevo
             if (numero < min || numero > max) {
-                System.out.println(mensaje);
+                System.out.println(error);
                 continue;
             }
 
@@ -78,7 +77,7 @@ public class LecturaDatos {
                 continue;
             }
 
-            if (!Texto.formatearTexto(dato).equals("matricula")) {
+            if (!Formateador.formatearTexto(dato).equals("matricula")) {
                 entradaDato = Formateador.formatearNombre(entradaDato); // Datos (no matrícula)
             
             } else {

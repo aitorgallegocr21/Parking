@@ -4,6 +4,7 @@
  */
 package utilidadesParking;
 
+import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,24 @@ public class Formateador {
                 .filter(palabra -> !palabra.isEmpty())
                 .map(palabra -> Character.toUpperCase(palabra.charAt(0)) + palabra.substring(1))
                 .collect(Collectors.joining(" "));
+    }
+
+    /**
+     * Formatea un texto de forma que lo convierte todo a minúsculas y le quita las tildes a las vocales.
+     * 
+     * @param textoAFormaterar Texto que se va a formatear.
+     * @return Texto ya formateado como se explica.
+     */
+    public static String formatearTexto(String textoAFormaterar) {
+        
+        if (textoAFormaterar == null) {
+            return "";
+        }
+        
+        // Normaliza el texto y quita los símbolos de acentos (diacríticos)
+        String normalizado = Normalizer.normalize(textoAFormaterar, Normalizer.Form.NFD);
+        return normalizado.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
+                .toLowerCase().trim();
     }
 
 }

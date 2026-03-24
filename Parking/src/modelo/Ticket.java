@@ -227,7 +227,12 @@ public class Ticket implements Comparable<Ticket>, Serializable {
     
     @Override
     public int compareTo(Ticket t) {
-        return Double.compare(this.importeTotal, t.importeTotal);
+        if (importeTotal != t.importeTotal) {
+            return Double.compare(importeTotal, t.importeTotal);
+        
+        } else {
+            return entrada.compareTo(t.entrada);
+        }
     }
 
     @Override

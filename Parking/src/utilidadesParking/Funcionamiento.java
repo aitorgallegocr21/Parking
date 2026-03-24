@@ -101,7 +101,7 @@ public class Funcionamiento {
         }
         
         System.out.print("\n" + mensaje + " (1-" + lista.size() + "): ");
-        int eleccion = LecturaDatos.introOpcion(sc, 1, lista.size());
+        int eleccion = LecturaDatos.introOpcion(sc, 1, lista.size(), "Selecciona un ticket: ");
 
         return lista.get(eleccion - 1);
     }
@@ -172,6 +172,7 @@ public class Funcionamiento {
     }
 
     /**
+     * 
      * @param salida
      * @param parking
      */
@@ -182,13 +183,13 @@ public class Funcionamiento {
                 .map(Ticket::getFormaPago)
                 .toList();
         
-        int mensual = Collections.frequency(listaFormasPago, FormaPago.MENSUAL);
-        int efectivo = Collections.frequency(listaFormasPago, FormaPago.EFECTIVO);
-        int tarjeta = Collections.frequency(listaFormasPago, FormaPago.TARJETA);
-        
-        salida.append("- ").append("Tickets pagados con tarjeta: ").append(tarjeta)
-                .append("\n- ").append("Tickets pagados en efectivo: ").append(efectivo)
-                .append("\n- ").append("Tickets abonados: ").append(mensual).append("\n");
+        listaFormasPago.stream().distinct().forEach(f -> {
+                salida.append("- ")
+                        .append("Tickets pagados con forma de pago ")
+                        .append(Formateador.formatearNombre(f.toString()))
+                        .append(": ")
+                        .append(Collections.frequency(listaFormasPago, f));
+        });
     }
-
+    
 }

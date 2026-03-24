@@ -181,13 +181,19 @@ public class Parking implements Serializable {
             return "No se encontraron tickets cerrados para la matricula " + matricula;
         }
         
-        // Construir salida
-        String salida = "Tickets Cerrados con matrícula " + matricula + ": " + ticketsCerradosMatricula.size();
-        salida += "\n- " + ticketsCerradosMatricula.stream()
-                .map(Ticket::toString)
-                .collect(Collectors.joining("\n- "));
+        StringBuilder salida = new StringBuilder();
+
+        salida.append("Tickets cerrados con matrícula ")
+                .append(matricula)
+                .append(": ")
+                .append(ticketsCerradosMatricula.size())
+                .append("\n");
+
+        ticketsCerradosMatricula.stream().forEach(t -> {
+            salida.append(t.toString());
+        });
         
-        return salida;        
+        return salida.toString();        
     }
     
     /**
@@ -286,11 +292,11 @@ public class Parking implements Serializable {
     }
 
     public Map<String, Ticket> getTicketsAbiertos() {
-        return ticketsAbiertos;
+        return Collections.unmodifiableMap(ticketsAbiertos);
     }
 
     public List<Ticket> getTicketsCerrados() {
-        return ticketsCerrados;
+        return Collections.unmodifiableList(ticketsCerrados);
     }
     
     

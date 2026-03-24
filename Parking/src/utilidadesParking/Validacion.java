@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import modelo.Parking;
-import utilidades.Texto;
 
 /**
  *
@@ -55,6 +54,11 @@ public class Validacion {
         }
     }
 
+    /**
+     * @param entradaDato
+     * @param dato
+     * @throws IllegalArgumentException
+     */
     public static void validarDatosVehiculo(String entradaDato, String dato) throws IllegalArgumentException {
         if (entradaDato.isBlank() || entradaDato.isEmpty()) {
             throw new IllegalArgumentException("No puede estar vac\u00edo.");
@@ -65,6 +69,11 @@ public class Validacion {
         }
     }
 
+    /**
+     * @param matricula
+     * @param parking
+     * @throws IllegalArgumentException
+     */
     public static void validarMatricula(String matricula, Parking parking) throws IllegalArgumentException {
         
         if (matricula.isEmpty()) {
@@ -88,9 +97,15 @@ public class Validacion {
         }
     }
 
+    /**
+     * @param dato
+     * @param entradaDato
+     * @param parking
+     * @throws IllegalArgumentException
+     */
     public static void validarDato(String dato, String entradaDato, Parking parking) throws IllegalArgumentException {
         
-        dato = Texto.formatearTexto(dato).toLowerCase();
+        dato = Formateador.formatearTexto(dato).toLowerCase();
         
         try {
             if (dato.equals("matricula")) {
