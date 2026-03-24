@@ -245,6 +245,9 @@ public class Parking implements Serializable {
         return false;
     }
 
+    /**
+     * @return
+     */
     public String[] obtenerArrayMatriculas() {
 
         if (ticketsCerrados.isEmpty()) {
@@ -258,7 +261,19 @@ public class Parking implements Serializable {
         return matriculas;
     }
 
-    
+    /**
+     * @return
+     */
+    public Double[] obtenerArrayImportes() {
+
+        Double[] importes = ticketsCerrados.stream()
+                .map(t -> Formateador.redondear(t.getImporteTotal()))
+                .toArray(Double[]::new);
+
+        return importes;
+    }
+
+
     
     // --- GETTERS & SETTERS
 

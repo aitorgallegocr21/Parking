@@ -99,15 +99,9 @@ public class Funcionamiento {
         for (int i = 0; i < lista.size(); i++) {
             System.out.printf("[%d] %s%n", (i + 1), transformador.apply(lista.get(i)));
         }
-
-        System.out.println("");
         
-        int eleccion;
-        do {
-            System.out.print(mensaje + " (1-" + lista.size() + "): ");
-            eleccion = LecturaDatos.introNumEntPos(sc);
-            
-        } while (eleccion < 1 || eleccion > lista.size());
+        System.out.print("\n" + mensaje + " (1-" + lista.size() + "): ");
+        int eleccion = LecturaDatos.introOpcion(sc, 1, lista.size());
 
         return lista.get(eleccion - 1);
     }

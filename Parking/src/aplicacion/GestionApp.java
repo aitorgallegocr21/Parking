@@ -5,6 +5,8 @@
 package aplicacion;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 import modelo.FormaPago;
 import modelo.Parking;
@@ -55,6 +57,7 @@ public class GestionApp {
                 case 8 -> ticketsCerradosPorImporte();
                 case 9 -> anularTicketAbiertoDeParking();
                 case 10 -> vehiculosRecurrentes();
+                case 11 -> topNTicketsMasCaros();
                 case 12 -> { return; }
             }
         }
@@ -194,10 +197,70 @@ public class GestionApp {
         }
     }
 
+    /**
+     * 
+     */
     public void vehiculosRecurrentes() {
 
+        String[] matriculas = parking.obtenerArrayMatriculas();
 
+        Arrays.sort(matriculas);
 
+        // Se filtran por matrículas las cuales aparecen más de 1 vez
+        String[] recurrentes = Arrays.stream(matriculas)
+                .filter(m -> (
+                        Arrays.stream(matriculas) // Segundo stream para contar
+                                .filter(mat -> mat.equals(m))
+                                .count() >= 2
+                ))
+                .distinct() // Para que las matrículas recurrentes solo salgan una vez
+                .toArray(String[]::new);
+
+        if (matriculas.length == 0) {
+            System.out.println("No se han detectado vehículos.");
+            return;
+        }
+
+        if (recurrentes.length == 0) {
+            System.out.println("No se han detectado vehículos recurrentes.");
+            return;
+        }
+
+        // Mostrar el array ordenado y luego el de vehículos recurrentes
+        System.out.println("Lista de matrículas ordenadas ----------------------------------\n");
+        System.out.println(Arrays.toString(matriculas));
+        System.out.println();
+        System.out.println("Lista de vehículos recurrentes (2 o más veces) -----------------\n");
+        System.out.println(Arrays.toString(matriculas));
     }
-    
+
+    /**
+     * 
+     */
+    public void topNTicketsMasCaros() {
+
+        // Se obtiene el array de importes
+        Double[] importes = parking.obtenerArrayImportes();
+
+        if (importes.length == 0) {
+            System.out.println("No hay tickets cerrados.");
+            return;
+        }
+
+        Arrays.sort(importes, Comparator.reverseOrder());
+
+        int cantidad = LecturaDatos.introOpcion(sc, 1, Integer.MAX_VALUE);
+
+        // Se valida la cantidad elegida
+        if (cantidad > importes.length) {
+            System.out.println("No hay tantos tickets cerrados.");
+            cantidad = importes.length;
+        }
+
+        Double[] importesCantidad = Arrays.copyOfRange(importes, 0, cantidad);
+
+        System.out.println("Ranking de " + cantidad + " ticket/s más caros --------------------");
+        System.out.println(Arrays.toString(importesCantidad));
+    }
+
 }

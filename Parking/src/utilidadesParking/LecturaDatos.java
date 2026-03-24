@@ -16,35 +16,6 @@ import utilidades.Texto;
  */
 public class LecturaDatos {
 
-    public static int introNumEntPos(Scanner sc) {
-        
-        int numero;
-
-        while (true) {
-
-            try {
-                System.out.print("Introduce un n\u00famero entero: ");
-                numero = sc.nextInt();
-                sc.nextLine();
-
-            } catch (InputMismatchException e) {
-                System.out.println("El n\u00famero introducido debe ser entero.\n");
-                sc.nextLine();
-                continue;
-
-            }
-
-            if (numero < 0) {
-                System.out.println("El n\u00famero debe ser mayor que 0.\n");
-                continue;
-            }
-
-            break;
-        }
-
-        return numero;
-    }
-
     /**
      * Pide introducir una opción. No admite negativos, con decimales u otra cosa que no sea una opción válida.
      * @param sc Scanner para introducir el número.
