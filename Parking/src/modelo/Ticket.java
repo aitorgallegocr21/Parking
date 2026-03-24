@@ -53,7 +53,8 @@ public class Ticket implements Comparable<Ticket>, Serializable {
      * 
      */
     public void aplicarDescuento() {
-        this.importeTotal -= this.importeTotal * DESCUENTO;
+        importeTotal -= importeTotal * DESCUENTO;
+        importeTotal = Formateador.redondear(importeTotal);
     }
 
     /**
@@ -78,11 +79,11 @@ public class Ticket implements Comparable<Ticket>, Serializable {
     public void calcularImporte() {
         
         // Se obtiene el total de minutos una sola vez
-        long totalMinutos = Duration.between(this.entrada, this.salida).toMinutes();
+        long totalMinutos = Duration.between(entrada, salida).toMinutes();
 
         // Caso especial: Estancia muy corta (menos de 90 min)
         if (totalMinutos < LIMITE_MIN_PRECIO_MINIMO) {
-            this.importeTotal = PRECIO_MINIMO;
+            importeTotal = PRECIO_MINIMO;
             return;
         }
 
@@ -94,7 +95,8 @@ public class Ticket implements Comparable<Ticket>, Serializable {
         long minutosFinales = restoSemanas % MINUTOS_DIA;
 
         // Se calcula el importeTotal dependiendo del tiempo
-        this.importeTotal = calcularTotalImporte(totalMinutos, semanas, dias, minutosFinales);
+        importeTotal = calcularTotalImporte(totalMinutos, semanas, dias, minutosFinales);
+        importeTotal = Formateador.redondear(importeTotal);
     }
     
     /**
@@ -141,7 +143,7 @@ public class Ticket implements Comparable<Ticket>, Serializable {
                 .append("Ticket con menos importe: ")
                 .append(ticketMinImporte.getVehiculo().getMatricula())
                 .append(" (")
-                .append(Formateador.redondear(ticketMinImporte.getImporteTotal()))
+                .append(ticketMinImporte.getImporteTotal())
                 .append("€)\n");
     }
 
@@ -157,7 +159,7 @@ public class Ticket implements Comparable<Ticket>, Serializable {
                 .append("Ticket con más importe: ")
                 .append(ticketMaxImporte.getVehiculo().getMatricula())
                 .append(" (")
-                .append(Formateador.redondear(ticketMaxImporte.getImporteTotal()))
+                .append(ticketMaxImporte.getImporteTotal())
                 .append("€)\n");
     }
 
@@ -210,7 +212,7 @@ public class Ticket implements Comparable<Ticket>, Serializable {
     }
 
     public void setImporteTotal(double importeTotal) {
-        this.importeTotal = importeTotal;
+        this.importeTotal = Formateador.redondear(importeTotal);
     }
 
     public void setVehiculo(Vehiculo vehiculo) {
@@ -244,7 +246,7 @@ public class Ticket implements Comparable<Ticket>, Serializable {
                 + ") - ("
                 + salida.format(formatoFecha)
                 + ") | "
-                + Formateador.redondear(importeTotal) + "€";
+                + importeTotal + "€";
     }
 
 }

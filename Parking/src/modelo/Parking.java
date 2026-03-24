@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import utilidadesParking.Formateador;
 import utilidadesParking.Funcionamiento;
 
 /**
@@ -125,7 +124,7 @@ public class Parking implements Serializable {
              + "- Hora de entrada: " + ticket.getEntrada().format(pattern) + "\n"
              + "- Hora de salida: " + ticket.getSalida().format(pattern) + "\n"
              + "- Forma de pago: " + ticket.getFormaPago() + "\n"
-             + "- Importe total: " + Formateador.redondear(ticket.getImporteTotal()) + "€";    
+             + "- Importe total: " + ticket.getImporteTotal() + "€";    
     }
     
     /**
@@ -136,10 +135,10 @@ public class Parking implements Serializable {
         return    "- Entradas: " + entradasTotales + "\n"
                 + "- Salidas: " + salidasTotales + "\n"
                 + "- Vehículos dentro del parking: " + entradasAbiertas + "\n"
-                + "- Importe total facturado: " + Formateador.redondear(importeTotalFacturado) + "€\n"
-                + "- Importe por tarjeta: " + Formateador.redondear(importeTarjeta) + "€\n"
-                + "- Importe por efectivo: " + Formateador.redondear(importeEfectivo) + "€\n"
-                + "- Importe por abonado mensual: " + Formateador.redondear(importeMensual) + "€";     
+                + "- Importe total facturado: " + importeTotalFacturado + "€\n"
+                + "- Importe por tarjeta: " + importeTarjeta + "€\n"
+                + "- Importe por efectivo: " + importeEfectivo + "€\n"
+                + "- Importe por abonado mensual: " + importeMensual + "€";     
     }
     
     /**
@@ -220,7 +219,7 @@ public class Parking implements Serializable {
                         + " | "
                         + t.getVehiculo().getMatricula()
                         + " | "
-                        + String.format("%8s", Formateador.redondear(t.getImporteTotal()))
+                        + String.format("%8s", t.getImporteTotal())
                         + "€ | "
                         + t.getFormaPago();
         
@@ -273,7 +272,7 @@ public class Parking implements Serializable {
     public Double[] obtenerArrayImportes() {
 
         Double[] importes = ticketsCerrados.stream()
-                .map(t -> Formateador.redondear(t.getImporteTotal()))
+                .map(Ticket::getImporteTotal)
                 .toArray(Double[]::new);
 
         return importes;

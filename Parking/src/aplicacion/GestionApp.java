@@ -66,7 +66,7 @@ public class GestionApp {
     /**
      *
      */
-    public void registrarSalidaVehiculo() {
+    private void registrarSalidaVehiculo() {
         
         // Seleccionar vehículo que va a salir
         Funcionamiento.seleccionarTicket(parking, sc);
@@ -89,7 +89,7 @@ public class GestionApp {
      *
      * @return
      */
-    public int seleccionarAccion() {
+    private int seleccionarAccion() {
         
         System.out.println("\n--- PARKING ---");
         System.out.println(Funcionamiento.menu() + "\n");
@@ -104,7 +104,7 @@ public class GestionApp {
     /**
      *
      */
-    public void registrarEntradaVehiculo() {
+    private void registrarEntradaVehiculo() {
         
         // Se crea el vehículo con los datos introducidos.
         Vehiculo v1 = Funcionamiento.vehiculo(sc, parking);
@@ -124,7 +124,7 @@ public class GestionApp {
     /**
      *
      */
-    public void listarTicketAbiertos() {
+    private void listarTicketAbiertos() {
         
         System.out.println("Ticket/s Abiertos (" + parking.getTicketsAbiertos().size() + " ticket/s) ----------------------");
         
@@ -136,7 +136,7 @@ public class GestionApp {
     /**
      *
      */
-    public void listarTicketCerrados() {
+    private void listarTicketCerrados() {
         
         System.out.println("Ticket/s Cerrados (" + parking.getTicketsCerrados().size() + " ticket/s) ----------------------");
         
@@ -149,7 +149,7 @@ public class GestionApp {
     /**
      *
      */
-    public void statsTicketsCerrados() {
+    private void statsTicketsCerrados() {
         System.out.println("Estadísticas de tickets cerrados --------------------");
         System.out.println(parking.obtenerEstadisticas());
     }
@@ -157,7 +157,7 @@ public class GestionApp {
     /**
      *
      */
-    public void buscarTCerradosPorMat() {
+    private void buscarTCerradosPorMat() {
         
         String matricula = LecturaDatos.introDatoVehiculo(
                 sc,
@@ -172,14 +172,14 @@ public class GestionApp {
     /**
      *
      */
-    public void ticketsCerradosPorImporte() {
+    private void ticketsCerradosPorImporte() {
         System.out.println(parking.listarTicketsCerradosOrdenadosPorImporte());
     }
     
     /**
      * 
      */
-    public void anularTicketAbiertoDeParking() {
+    private void anularTicketAbiertoDeParking() {
 
         // Se introduce matrícula sin validación para que permita introducir matrícula antes introducida
         String matricula = LecturaDatos.introDatoVehiculo(
@@ -200,7 +200,7 @@ public class GestionApp {
     /**
      * 
      */
-    public void vehiculosRecurrentes() {
+    private void vehiculosRecurrentes() {
 
         String[] matriculas = parking.obtenerArrayMatriculas();
 
@@ -240,7 +240,7 @@ public class GestionApp {
     /**
      * 
      */
-    public void topNTicketsMasCaros() {
+    private void topNTicketsMasCaros() {
 
         // Se obtiene el array de importes
         Double[] importes = parking.obtenerArrayImportes();
